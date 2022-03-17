@@ -1,7 +1,5 @@
 # import pytest
 from array import array
-from warnings import catch_warnings
-from numpy import append
 from selenium.webdriver import Chrome
 from selenium.webdriver.common.keys import Keys
 from time import sleep
@@ -18,15 +16,9 @@ driver = Chrome()
 driver.implicitly_wait(10)
 
 url = 'https://www.tokopedia.com/'
-search_term = 'xiaomi'
+search_term = 'huawei'
 driver.get(url)
 
-# sleep(5)
-
-# search_input = driver.find_element_by_xpath(
-#       '//input[@aria-label="Search query"]')
-# search_input = driver.find_element_by_xpath(
-#     '//*[@id="search-container"]/form/div/div/div/input')
 search_input = driver.find_element(
     By.XPATH, '//input[@aria-label="Bidang pencarian"]')
 search_input.send_keys(search_term)
@@ -43,6 +35,8 @@ for timer in range(0, 10):
    y += 600
    sleep(3)
 
+# driver.switchTo().alert().accept()
+
 # this scrolls untill the element is in the middle of the page
 # lenOfPage = driver.execute_script(
 #     "window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
@@ -57,9 +51,6 @@ for timer in range(0, 10):
 # element = driver.find_element_by_xpath('//div[@class="css-70qvj9"]')
 # driver.execute_script("arguments[0].scrollIntoView();", element)
 
-
-# sleep(10)
-# limit = 10
 
 titles, prices, rates = [], [], []
 data = pd.DataFrame()
@@ -76,7 +67,8 @@ cards = catalog.find_elements(
 
 # print("Total container : ", len(container))
 # print("Total cards : ", len(cards))
-# driver.find_element(By.XPATH, "//button[@aria-label='Halaman berikutnya']").click()
+driver.find_element(
+    By.XPATH, '//div[@class="unf-coachmark__next-button css-64apm5 e1o9jid35"]').click()
 
 
 # count = 0
@@ -96,14 +88,15 @@ for card in cards:
    rates.append(rate)
    # print(count, "\t", titles, "\t", prices, "\t", rates, "\n")
    # print(count, "\t", titles, "\t", prices, "\n")
-sleep(10)
-driver.find_element(
-    By.XPATH, "//button[@aria-label='Halaman berikutnya']").click()
+# sleep(10)
 
 data['titles'] = titles
 data['prices'] = prices
 data['rates'] = rates
 print(data)
+
+driver.find_element(
+    By.XPATH, "//button[@aria-label='Halaman berikutnya']").click()
 
 # sellers = driver.find_elements_by_class_name('css-1kdc32b')
 
