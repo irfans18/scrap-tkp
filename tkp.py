@@ -52,7 +52,7 @@ def load_catalog(driver):
    y = 1000
    for timer in range(0, 9):
       driver.execute_script("window.scrollTo(0, "+str(y)+")")
-      y += 600
+      y += 800
       sleep(2)
 
    cards = driver.find_elements(
@@ -79,7 +79,8 @@ def extract_from_card(card):
          seller_user = seller.text
       count += 1
    seller_url = card.find_element(
-       By.XPATH, './/div[@class="css-zimbi"]/a').get_attribute('href')
+       By.XPATH, './/div[@class="css-974ipl"]/a').get_attribute('href')
+   # seller_url = "no_url"
    product = (title, price, rate, seller_user, seller_town, seller_url)
    return product
 
@@ -90,6 +91,8 @@ def main(search_term, pages, filepath):
    query_search(driver, search_term)
    count = 0
    for i in range(pages):
+      
+      # pop up click
       if i == 0:
          driver.find_element(
              By.XPATH, '//div[@class="unf-coachmark__next-button css-64apm5 e1o9jid35"]').click()
